@@ -29,7 +29,7 @@ fy = sin(12*(fx+0.2))/(fx+0.2)
 
 ```{r }
 smooth.diagonal = function(x, span){
-# return the smoother matrix with values x and span = span
+# return the diagonal of the smooth matrix with values x and span = span
 # 
  n = length(x)
  A = matrix(0, n, n)
@@ -41,14 +41,11 @@ smooth.diagonal = function(x, span){
  return(diag(A))
 }
 
-S = smooth.diagonal(x, span = 0.5)
-
-
 ```
 
 
 ```{r }
-spans = seq(0.2,0.9, by = 0.05)
+spans = seq(0.2, 0.9, by = 0.05)
 
 m = length(spans)
 n = length(x)
@@ -69,6 +66,17 @@ optspan.cv = spans[mycv==min(mycv)]
 
 fitopt = loess(y ~ x, myData, span=optspan.cv)
 
+print('CV error:')
+mycv
+
+print ('GCV error:')
+mygcv
+
+print('optimal span based on CV:')
+optspan.cv
+
+print('optimal span based on GCV:')
+optspan.gcv
 ```
 
 
@@ -76,8 +84,8 @@ fitopt = loess(y ~ x, myData, span=optspan.cv)
 ```{r }
 
 plot(x, y, xlab="x", ylab="y")
-lines(fx, predict(fitopt, fx), col="red", lwd=2)
-lines(fx, fy, col="gray", lwd=2)  
+lines(fx, predict(fitopt, fx), col="blue", lwd=2, lty = 2)
+lines(fx, fy, col="gray", lwd=2)
 
 ```
 
