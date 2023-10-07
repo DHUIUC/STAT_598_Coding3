@@ -1,5 +1,6 @@
 ---
 title: "STAT 598: Assignment 3"
+
 output: html_document
 ---
 
@@ -9,13 +10,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r }
 library(splines)
+library(dplyr)
+library(tidyverse)
 options(digits = 4)
+set.seed(0939)
 ```
 
 # Part I
 
 ```{r }
-myData = read.csv("Coding3_Data.csv")
+myData = read.csv("Coding3_Data_Original.csv")
 x = myData$x
 y = myData$y
 
@@ -102,7 +106,7 @@ sales_norm = sales %>%
 # 1. Fitting NCS 
 n.knots = 8
 df = 9
-x = seq(0, 1, length.out= ncol(sales_norm))
+x = seq(0, 52, length.out= ncol(sales_norm))
 
 ## F is a 52-by-9 design matrix without the intercept. For instance, this can be obtained using
 # the ns command in R. Remove the column mean from F to disregard the intercept.
@@ -140,9 +144,7 @@ Bcenters = kmeans_B$centers
 ```
 
 ```{r}
-plot.new()
 par(mfrow=c(2,3))
-title(main='Clustering Using Matrix B')
 for (i in 1:6){
   pick_cluster= which(Bclusters==i)
   plot_data = matrix(0,52,length(pick_cluster))
