@@ -46,7 +46,7 @@ ridgeless <- function(train_data, test_data) {
 f <- file.choose()
 
 # Load your training and test datasets here (train_data and test_data)
-myData = read.csv(f)
+myData = read.csv('Coding3_dataH.csv')
 
 #Number of iterations for Simulation Study
 T = 30
