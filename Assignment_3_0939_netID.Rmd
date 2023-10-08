@@ -97,6 +97,9 @@ lines(fx, fy, col="gray", lwd=2)
 
 # Part II
 ```{r}
+
+set.seed(939)# Walter's UIN 0939
+
 sales = read.csv('Sales_Transactions_Dataset_Weekly.csv')[,c(1:53)] %>% 
   data.frame()
 
@@ -116,7 +119,7 @@ sales_norm = sales %>%
 # 1. Fitting NCS 
 n.knots = 8
 df = 9
-x = seq(0, 52, length.out= ncol(sales_norm))
+x = seq(1, 52, length.out= ncol(sales_norm))
 
 ## F is a 52-by-9 design matrix without the intercept. For instance, this can be obtained using
 # the ns command in R. Remove the column mean from F to disregard the intercept.
@@ -157,7 +160,7 @@ Bcenters = kmeans_B$centers
 par(mfrow=c(2,3))
 for (i in 1:6){
   pick_cluster= which(Bclusters==i)
-  plot_data = matrix(0,52,length(pick_cluster))
+  plot_data = matrix(1,52,length(pick_cluster))
 
   for (j in 1:length(pick_cluster)){
     plot_data[,j] = sales_norm[j,]
@@ -196,6 +199,8 @@ for (i in 1:6){
 # Part III
 ### 1. Ridgless Function
 ```{r}
+
+set.seed(939)# Walter's UIN 0939
 
 ridgeless <- function(train_data, test_data) {
   
@@ -237,7 +242,7 @@ ridgeless <- function(train_data, test_data) {
 }
 ```
 
-### 2. Simluation Study
+### 2. Simulation Study
 ```{r}
 myData = read.csv('Coding3_dataH.csv')
 #Number of iterations for Simulation Study
@@ -312,3 +317,7 @@ ggplot(plot_data, aes(x = Count_of_Parameters, y = Median_Test_Error)) +
   ggtitle("Median Test Error vs. Count of Regression Parameters") +
   theme_minimal()
 ```
+
+# Contributions
+
+Walter did Part I of the assignment (LOESS). Adi completed Part II (Clustering time series), and Dillon finished Part III (Double descent and Simulation). The team worked together to clarify the difficult portions of the assignment. 
